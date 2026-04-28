@@ -1,0 +1,55 @@
+#ifndef _RADIOLIB_EX_LORAWAN_CONFIG_H
+#define _RADIOLIB_EX_LORAWAN_CONFIG_H
+
+#include <RadioLib.h>
+#include "esp_log.h"
+
+// Radio pin configuration
+#define SPI_Hz    8 * 1000 * 1000
+#define MISO_PIN  46
+#define MOSI_PIN  45
+#define CLK_PIN   40
+#define NSS_PIN   42
+#define IRQ_PIN   38
+#define NRST_PIN  39
+#define BUSY_PIN  41
+
+// LoRaWAN parameters
+const uint32_t uplinkIntervalSeconds = 5UL * 60UL;
+
+// joinEUI - previous versions of LoRaWAN called this AppEUI
+// for development purposes you can use all zeros - see wiki for details
+#define RADIOLIB_LORAWAN_JOIN_EUI  0x0000000000000000
+
+// the Device EUI & two keys can be generated on the TTN console 
+#ifndef RADIOLIB_LORAWAN_DEV_EUI   // Replace with your Device EUI
+#define RADIOLIB_LORAWAN_DEV_EUI   0x---------------
+#endif
+#ifndef RADIOLIB_LORAWAN_APP_KEY   // Replace with your App Key 
+#define RADIOLIB_LORAWAN_APP_KEY   0x--, 0x--, 0x--, 0x--, 0x--, 0x--, 0x--, 0x--, 0x--, 0x--, 0x--, 0x--, 0x--, 0x--, 0x--, 0x-- 
+#endif
+#ifndef RADIOLIB_LORAWAN_NWK_KEY   // Put your Nwk Key here
+#define RADIOLIB_LORAWAN_NWK_KEY   0x--, 0x--, 0x--, 0x--, 0x--, 0x--, 0x--, 0x--, 0x--, 0x--, 0x--, 0x--, 0x--, 0x--, 0x--, 0x-- 
+#endif
+const LoRaWANBand_t Region = EU868;
+const uint8_t subBand = 0;
+
+uint64_t joinEUI =   RADIOLIB_LORAWAN_JOIN_EUI;
+uint64_t devEUI  =   RADIOLIB_LORAWAN_DEV_EUI;
+uint8_t appKey[] = { RADIOLIB_LORAWAN_APP_KEY };
+uint8_t nwkKey[] = { RADIOLIB_LORAWAN_NWK_KEY };
+
+// Forward declaration for ESP-IDF
+class EspHal;
+extern EspHal* hal;
+extern LR2021 radio;
+extern LoRaWANNode node;
+
+// Error code to string
+const char* stateDecode(const int16_t result);
+
+// Debug & helper
+void debug(bool failed, const char* message, int state, bool halt);
+void arrayDump(uint8_t *buffer, uint16_t len);
+
+#endif
