@@ -9,7 +9,7 @@ project(02_lr2021_rx)
 # if you did not build RadioLib as shared library (see wiki),
 # you will have to add it as source directory
 # the following is just an example, yours will likely be different
-add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/../../libraries/RadioLib" "${CMAKE_CURRENT_BINARY_DIR}/RadioLib")
+add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/../../../libraries/RadioLib" "${CMAKE_CURRENT_BINARY_DIR}/RadioLib")
 
 # add the executable
 add_executable(${PROJECT_NAME} main.cpp)
