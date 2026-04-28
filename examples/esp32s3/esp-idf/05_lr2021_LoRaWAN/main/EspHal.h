@@ -122,7 +122,7 @@ public:
 
         uint32_t start = micros();
 
-        // 等待状态变化
+        
         while(digitalRead(pin) == state) {
             if((micros() - start) > timeout) {
                 return 0;
@@ -155,7 +155,7 @@ public:
         spi_host_device_t host = SPI2_HOST;
 
         spi_device_interface_config_t devcfg = {};
-        devcfg.clock_speed_hz = SPI_Hz;
+        devcfg.clock_speed_hz = SPI_FREQ_HZ;
         devcfg.mode = 0;
         devcfg.spics_io_num = -1;
         devcfg.queue_size = 1;

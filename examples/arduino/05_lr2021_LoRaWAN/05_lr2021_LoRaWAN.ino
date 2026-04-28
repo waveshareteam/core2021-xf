@@ -138,5 +138,5 @@ void loop() {
   Serial.print(uplinkIntervalSeconds);
   Serial.println(F("s\n"));
 
-  delay(30 * 1000UL);
+  delay(uplinkIntervalSeconds * 1000UL);
 }

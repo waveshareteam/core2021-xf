@@ -24,7 +24,7 @@
 #include "EspHal.h"
 
 // create a new instance of the HAL class
-EspHal* hal = new EspHal(CLK_PIN, MISO_PIN, MOSI_PIN);
+EspHal* hal = new EspHal(GPIO_SPI_CLK, GPIO_SPI_MISO, GPIO_SPI_MOSI);
 
 // now we can create the radio module
 LR2021 radio = new Module(hal, NSS_PIN, IRQ_PIN, NRST_PIN, BUSY_PIN);
@@ -48,7 +48,7 @@ extern "C" void app_main(void) {
   if (state != RADIOLIB_ERR_NONE) {
     ESP_LOGE(TAG, "[LR2021] Init failed, code: %d", state);
     while (1) {
-      vTaskDelay(pdMS_TO_TICKS(10));
+      hal->delay(10);
     }
   }
   ESP_LOGI(TAG, "[LR2021] Init successful!");
@@ -85,7 +85,7 @@ extern "C" void app_main(void) {
       radio.finishTransmit();
 
       // 1-second delay
-      vTaskDelay(pdMS_TO_TICKS(1000));
+      hal->delay(1000);
 
       // Send next packet
       snprintf(sendBuffer, sizeof(sendBuffer), "Hello World! #%d", count++);
@@ -93,6 +93,6 @@ extern "C" void app_main(void) {
       ESP_LOGI(TAG, "[LR2021] Sending next packet...");
     }
 
-    vTaskDelay(pdMS_TO_TICKS(10));
+    hal->delay(10);
   }
 }

@@ -159,5 +159,5 @@ void loop() {
   Serial.println(F(" seconds\n"));
   
   // Wait until next uplink - observing legal & TTN FUP constraints
-  delay(30 * 1000UL);  // delay needs milli-seconds
+  delay(uplinkIntervalSeconds * 1000UL);  // delay needs milli-seconds
 }

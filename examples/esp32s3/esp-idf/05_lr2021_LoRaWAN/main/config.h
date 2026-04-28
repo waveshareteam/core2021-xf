@@ -5,10 +5,10 @@
 #include "esp_log.h"
 
 // Radio pin configuration
-#define SPI_Hz    8 * 1000 * 1000
-#define MISO_PIN  46
-#define MOSI_PIN  45
-#define CLK_PIN   40
+#define SPI_FREQ_HZ    8 * 1000 * 1000
+#define GPIO_SPI_MISO  46
+#define GPIO_SPI_MOSI  45
+#define GPIO_SPI_CLK   40
 #define NSS_PIN   42
 #define IRQ_PIN   38
 #define NRST_PIN  39
@@ -31,6 +31,7 @@ const uint32_t uplinkIntervalSeconds = 5UL * 60UL;
 #ifndef RADIOLIB_LORAWAN_NWK_KEY   // Put your Nwk Key here
 #define RADIOLIB_LORAWAN_NWK_KEY   0x--, 0x--, 0x--, 0x--, 0x--, 0x--, 0x--, 0x--, 0x--, 0x--, 0x--, 0x--, 0x--, 0x--, 0x--, 0x-- 
 #endif
+
 const LoRaWANBand_t Region = EU868;
 const uint8_t subBand = 0;
 

@@ -17,12 +17,17 @@
 // Transmit frequency: 868 MHz (ISM band)
 #define OUT_HZ 868000000UL
 
-// LR2021 pin configuration:
+#define NSS_PIN   10
+#define IRQ_PIN   2
+#define NRST_PIN  3
+#define BUSY_PIN  9 
+
+// LR2021 has the following connections:
 // NSS pin:   10
 // IRQ pin:   2
 // NRST pin:  3
 // BUSY pin:  9
-LR2021 radio = new Module(10, 2, 3, 9);
+LR2021 radio = new Module(NSS_PIN, IRQ_PIN, NRST_PIN, BUSY_PIN);
 
 void setup() {
   Serial.begin(115200);

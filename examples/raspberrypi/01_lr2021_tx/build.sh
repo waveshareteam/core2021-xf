@@ -4,6 +4,6 @@ set -e
 mkdir -p build
 cd build
 cmake -G "CodeBlocks - Unix Makefiles" ..
-make
+make -j$(nproc)
 cd ..
-size build/01_lr2021_tx
+size build/03_lr2021_pingpong

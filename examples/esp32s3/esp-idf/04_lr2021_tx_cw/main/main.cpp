@@ -20,7 +20,7 @@
 #define OUT_HZ 868000000UL
 
 // create a new instance of the HAL class
-EspHal* hal = new EspHal(CLK_PIN, MISO_PIN, MOSI_PIN);
+EspHal* hal = new EspHal(GPIO_SPI_CLK, GPIO_SPI_MISO, GPIO_SPI_MOSI);
 
 // now we can create the radio module
 LR2021 radio = new Module(hal, NSS_PIN, IRQ_PIN, NRST_PIN, BUSY_PIN);

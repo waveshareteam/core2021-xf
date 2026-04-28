@@ -15,14 +15,14 @@
 #include "EspHal.h"
 
 // create a new instance of the HAL class
-EspHal* hal = new EspHal(CLK_PIN, MISO_PIN, MOSI_PIN);
+EspHal* hal = new EspHal(GPIO_SPI_CLK, GPIO_SPI_MISO, GPIO_SPI_MOSI);
 
 // now we can create the radio module
 LR2021 radio = new Module(hal, NSS_PIN, IRQ_PIN, NRST_PIN, BUSY_PIN);
 
 LoRaWANNode node(&radio, &Region, subBand);
 
-static const char *TAG = "main";
+static const char *TAG = "05_lr2021_LoRaWAN";
 
 nvs_handle_t nvsHandle;
 
@@ -121,7 +121,7 @@ const char* stateDecode(const int16_t result) {
 void debug(bool failed, const char* message, int state, bool halt) {
   if (failed) {
     ESP_LOGE(TAG, "%s - %s (%d)", message, stateDecode(state), state);
-    while (halt) { vTaskDelay(pdMS_TO_TICKS(1)); }
+    while (halt) { hal->delay(1); }
   }
 }
 
@@ -151,14 +151,14 @@ extern "C" void app_main(void) {
 
     if (state != RADIOLIB_ERR_NONE) {
         ESP_LOGE(TAG, "Radio init failed, code: %d", state);
-        while (1) vTaskDelay(pdMS_TO_TICKS(10));
+        while (1) hal->delay(10);
     }
 
     // Initialize OTAA node
     state = node.beginOTAA(joinEUI, devEUI, nwkKey, appKey);
     if (state != RADIOLIB_ERR_NONE) {
         ESP_LOGE(TAG, "Node init failed, code: %d", state);
-        while (1) vTaskDelay(pdMS_TO_TICKS(10));
+        while (1) hal->delay(10);
     }
 
     // Restore previous session
@@ -173,7 +173,7 @@ extern "C" void app_main(void) {
                             (state != RADIOLIB_LORAWAN_SESSION_RESTORED);
     if (joinFailed) {
         ESP_LOGE(TAG, "Join failed, code: %d", state);
-        while (1) vTaskDelay(pdMS_TO_TICKS(10));
+        while (1) hal->delay(10);
     }
 
     // Save state after successful join
@@ -227,6 +227,6 @@ extern "C" void app_main(void) {
 
         // Wait for next transmission interval
         ESP_LOGI(TAG, "[Timer] Next uplink in %d s\n", uplinkIntervalSeconds);
-        vTaskDelay(pdMS_TO_TICKS(30 * 1000UL));
+        hal->delay(uplinkIntervalSeconds * 1000UL);
     }
 }

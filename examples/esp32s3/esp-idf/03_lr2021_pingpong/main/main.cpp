@@ -27,7 +27,7 @@
 // #define INITIATING_NODE
 
 // create a new instance of the HAL class
-EspHal* hal = new EspHal(CLK_PIN, MISO_PIN, MOSI_PIN);
+EspHal* hal = new EspHal(GPIO_SPI_CLK, GPIO_SPI_MISO, GPIO_SPI_MOSI);
 
 // now we can create the radio module
 LR2021 radio = new Module(hal, NSS_PIN, IRQ_PIN, NRST_PIN, BUSY_PIN);
@@ -141,7 +141,7 @@ extern "C" void app_main(void) {
         }
 
         // wait a second before transmitting again
-        vTaskDelay(pdMS_TO_TICKS(1000));
+        hal->delay(1000);
 
         // send another one
         ESP_LOGI(TAG, "[LR2021] Sending another packet ...");

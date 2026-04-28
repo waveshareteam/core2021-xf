@@ -90,7 +90,7 @@ void setup() {
   prefs.begin(NVS_NAMESPACE, false);
 
   // Initialize SPI bus
-  SPI.begin(CLK_PIN, MISO_PIN, MOSI_PIN, -1);
+  SPI.begin(GPIO_SPI_CLK, GPIO_SPI_MISO, GPIO_SPI_MOSI, -1);
   radio.irqDioNum = 11;
   radio.XTAL = true;
   

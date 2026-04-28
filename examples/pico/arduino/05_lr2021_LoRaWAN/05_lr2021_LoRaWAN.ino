@@ -103,9 +103,9 @@ void setup() {
   EEPROM.begin(EEPROM_SIZE);
 
   // Initialize SPI for RP2040
-  SPI1.setSCK(CLK_PIN);
-  SPI1.setRX(MISO_PIN);
-  SPI1.setTX(MOSI_PIN);
+  SPI1.setSCK(GPIO_SPI_CLK);
+  SPI1.setRX(GPIO_SPI_MISO);
+  SPI1.setTX(GPIO_SPI_MOSI);
   SPI1.begin();
 
   radio.irqDioNum = 11;

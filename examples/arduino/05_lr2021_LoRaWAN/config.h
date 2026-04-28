@@ -4,9 +4,14 @@
 #include <RadioLib.h>
 #include <SPI.h>
 
+#define NSS_PIN   10
+#define IRQ_PIN   2
+#define NRST_PIN  3
+#define BUSY_PIN  9 
+
 // first you have to set your radio model and pin configuration
 // this is provided just as a default example
-LR2021 radio = new Module(10, 2, 3, 9);
+LR2021 radio = new Module(NSS_PIN, IRQ_PIN, NRST_PIN, BUSY_PIN);   
 
 // if you have RadioBoards (https://github.com/radiolib-org/RadioBoards)
 // and are using one of the supported boards, you can do the following:
@@ -22,17 +27,17 @@ const uint32_t uplinkIntervalSeconds = 5UL * 60UL;    // minutes x seconds
 
 // joinEUI - previous versions of LoRaWAN called this AppEUI
 // for development purposes you can use all zeros - see wiki for details
-#define RADIOLIB_LORAWAN_JOIN_EUI  0xf7e677fd7c2fb705
+#define RADIOLIB_LORAWAN_JOIN_EUI  0x0000000000000000
 
 // the Device EUI & two keys can be generated on the TTN console 
 #ifndef RADIOLIB_LORAWAN_DEV_EUI   // Replace with your Device EUI
-#define RADIOLIB_LORAWAN_DEV_EUI   0xe812acae83084796
+#define RADIOLIB_LORAWAN_DEV_EUI   0x---------------
 #endif
 #ifndef RADIOLIB_LORAWAN_APP_KEY   // Replace with your App Key 
-#define RADIOLIB_LORAWAN_APP_KEY   0x09, 0x5e, 0x36, 0x2c, 0x3e, 0x75, 0xf0, 0xff, 0x81, 0xf1, 0x27, 0xf3, 0xd4, 0xbb, 0x17, 0xb0
+#define RADIOLIB_LORAWAN_APP_KEY   0x--, 0x--, 0x--, 0x--, 0x--, 0x--, 0x--, 0x--, 0x--, 0x--, 0x--, 0x--, 0x--, 0x--, 0x--, 0x-- 
 #endif
 #ifndef RADIOLIB_LORAWAN_NWK_KEY   // Put your Nwk Key here
-#define RADIOLIB_LORAWAN_NWK_KEY   0x09, 0x5e, 0x36, 0x2c, 0x3e, 0x75, 0xf0, 0xff, 0x81, 0xf1, 0x27, 0xf3, 0xd4, 0xbb, 0x17, 0xb0
+#define RADIOLIB_LORAWAN_NWK_KEY   0x--, 0x--, 0x--, 0x--, 0x--, 0x--, 0x--, 0x--, 0x--, 0x--, 0x--, 0x--, 0x--, 0x--, 0x--, 0x-- 
 #endif
 
 // for the curious, the #ifndef blocks allow for automated testing &/or you can

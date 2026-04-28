@@ -16,15 +16,15 @@
 #define INITIATING_NODE
 
 // LR2021 has the following connections:
-#define SPI_Hz    8 * 1000 * 1000
-#define MISO_PIN  12
-#define MOSI_PIN  11
-#define CLK_PIN   10
+#define SPI_FREQ_HZ    8 * 1000 * 1000
+#define GPIO_SPI_MISO  12
+#define GPIO_SPI_MOSI  11
+#define GPIO_SPI_CLK   10
 #define NSS_PIN   13
 #define IRQ_PIN   15
 #define NRST_PIN  5
 #define BUSY_PIN  14
-LR2021 radio = new Module(NSS_PIN, IRQ_PIN, NRST_PIN, BUSY_PIN, SPI1, SPISettings(SPI_Hz, MSBFIRST, SPI_MODE0));
+LR2021 radio = new Module(NSS_PIN, IRQ_PIN, NRST_PIN, BUSY_PIN, SPI1, SPISettings(SPI_FREQ_HZ, MSBFIRST, SPI_MODE0));
 
 // or detect the pinout automatically using RadioBoards
 // https://github.com/radiolib-org/RadioBoards
@@ -59,9 +59,9 @@ void setup() {
   Serial.begin(115200);
   delay(3000);
   
-  SPI1.setSCK(CLK_PIN);
-  SPI1.setRX(MISO_PIN);
-  SPI1.setTX(MOSI_PIN);
+  SPI1.setSCK(GPIO_SPI_CLK);
+  SPI1.setRX(GPIO_SPI_MISO);
+  SPI1.setTX(GPIO_SPI_MOSI);
   SPI1.begin();
 
   // LR2021 allows to use any DIO pin as the interrupt

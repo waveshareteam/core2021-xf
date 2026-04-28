@@ -18,20 +18,20 @@
 #define OUT_HZ 868000000UL
 
 // LR2021 pin configuration:
-#define SPI_Hz    8 * 1000 * 1000
-#define MISO_PIN  46
-#define MOSI_PIN  45
-#define CLK_PIN   40
+#define SPI_FREQ_HZ    8 * 1000 * 1000
+#define GPIO_SPI_MISO  46
+#define GPIO_SPI_MOSI  45
+#define GPIO_SPI_CLK   40
 #define NSS_PIN   42
 #define IRQ_PIN   38
 #define NRST_PIN  39
 #define BUSY_PIN  41
-LR2021 radio = new Module(NSS_PIN, IRQ_PIN, NRST_PIN, BUSY_PIN, SPI, SPISettings(SPI_Hz, MSBFIRST, SPI_MODE0));
+LR2021 radio = new Module(NSS_PIN, IRQ_PIN, NRST_PIN, BUSY_PIN, SPI, SPISettings(SPI_FREQ_HZ, MSBFIRST, SPI_MODE0));
 
 void setup() {
   Serial.begin(115200);
   delay(3000);
-  SPI.begin(CLK_PIN, MISO_PIN, MOSI_PIN, -1);
+  SPI.begin(GPIO_SPI_CLK, GPIO_SPI_MISO, GPIO_SPI_MOSI, -1);
   // enable external crystal
   radio.XTAL = true;
 

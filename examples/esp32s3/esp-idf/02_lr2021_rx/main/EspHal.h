@@ -20,10 +20,10 @@
 #define FALLING                     (0x02)
 #define NOP()                       asm volatile ("nop")
 
-#define SPI_Hz    8 * 1000 * 1000
-#define MISO_PIN  46
-#define MOSI_PIN  45
-#define CLK_PIN   40
+#define SPI_FREQ_HZ    8 * 1000 * 1000
+#define GPIO_SPI_MISO  46
+#define GPIO_SPI_MOSI  45
+#define GPIO_SPI_CLK   40
 #define NSS_PIN   42
 #define IRQ_PIN   38
 #define NRST_PIN  39
@@ -158,7 +158,7 @@ public:
         spi_host_device_t host = SPI2_HOST;
 
         spi_device_interface_config_t devcfg = {};
-        devcfg.clock_speed_hz = SPI_Hz;
+        devcfg.clock_speed_hz = SPI_FREQ_HZ;
         devcfg.mode = 0;
         devcfg.spics_io_num = -1;
         devcfg.queue_size = 1;

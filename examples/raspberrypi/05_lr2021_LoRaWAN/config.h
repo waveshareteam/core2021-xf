@@ -8,7 +8,7 @@
 #include "hal/RPi/PiHal.h"
 
 // Radio pin configuration
-#define SPI_Hz    8 * 1000 * 1000
+#define SPI_FREQ_HZ    8 * 1000 * 1000
 #define NSS_PIN   25
 #define IRQ_PIN   17
 #define NRST_PIN  22

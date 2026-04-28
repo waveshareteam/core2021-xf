@@ -24,7 +24,7 @@
 // of the nodes to initiate the pings
 // #define INITIATING_NODE
 
-#define SPI_Hz    8 * 1000 * 1000
+#define SPI_FREQ_HZ    8 * 1000 * 1000
 #define NSS_PIN   25
 #define IRQ_PIN   17
 #define NRST_PIN  22
@@ -35,7 +35,7 @@
 // The CS of LR2021 cannot use CE0; 
 // it needs to be replaced with another option; 
 // otherwise, communication will not be possible.
-PiHal* hal = new PiHal(0, SPI_Hz);
+PiHal* hal = new PiHal(0, SPI_FREQ_HZ);
 
 // now we can create the radio module
 // NSS pin:   25

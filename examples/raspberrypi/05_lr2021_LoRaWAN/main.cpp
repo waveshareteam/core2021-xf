@@ -24,7 +24,7 @@ static const char* NVS_FILE = "lorawan_state.bin";
 // The CS of LR2021 cannot use CE0; 
 // it needs to be replaced with another option; 
 // otherwise, communication will not be possible.
-PiHal* hal = new PiHal(0, SPI_Hz);
+PiHal* hal = new PiHal(0, SPI_FREQ_HZ);
 
 // now we can create the radio module
 // NSS pin:   25
@@ -254,7 +254,7 @@ int main(int argc, char** argv) {
 
         // Wait for next transmission interval
         printf("[Timer] Next uplink in %d s\n\n", uplinkIntervalSeconds);
-        hal->delay(30 * 1000);
+        hal->delay(uplinkIntervalSeconds * 1000);
     }
   return(0);
 }
