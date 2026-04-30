@@ -2,7 +2,7 @@
 
 [English](README.md)
 
-Core2021-XF 集成 Semtech 推出的 第四代 LoRa® 多频段收发器，适用于 Sub-GHz 与 2.4GHz 频段,具备 FLRC 调制，数据速率最高可达 2.6 Mbps
+Core2021-XF 集成 Semtech 推出的第四代 LoRa® 多频段收发器 LR2021,支持 Sub-GHz (410 ~ 510MHz / 850 ~ 930MHz)、2.4GHz ISM 频段，以及 1.5 ~ 2.5GHz 许可频段,具备 FLRC 调制，数据速率最高可达 2.6 Mbps
 
 - [购买链接](https://www.waveshare.net/shop/Core2021-XF.htm)
 - [产品文档](https://docs.waveshare.net/Core2021-XF/)

@@ -2,7 +2,7 @@
 
 [中文](README_ZH.md)
 
-Core2021-XF Integrating the fourth-generation LoRa® multi-band transceiver launched by Semtech, which is suitable for Sub-GHz and 2.4GHz frequency bands, and featuring FLRC modulation, with a data rate of up to 2.6 Mbps.
+Core2021-XF integrates the fourth-generation LoRa® multi-band transceiver Semtech LR2021, supporting Sub-GHz bands (410–510 MHz / 850–930 MHz), the 2.4 GHz ISM band, and licensed bands from 1.5 to 2.5 GHz. It also features FLRC modulation, with data rates of up to 2.6 Mbps..
 
 - [Purchase Link](https://www.waveshare.com/Core2021-XF.htm)
 - [Documentation](https://docs.waveshare.com/Core2021-XF)
