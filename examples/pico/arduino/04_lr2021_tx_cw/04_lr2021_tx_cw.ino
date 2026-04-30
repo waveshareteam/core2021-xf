@@ -30,8 +30,7 @@ LR2021 radio = new Module(NSS_PIN, IRQ_PIN, NRST_PIN, BUSY_PIN, SPI1, SPISetting
 
 void setup() {
   Serial.begin(115200);
-  delay(3000);
-  
+
   SPI1.setSCK(GPIO_SPI_CLK);
   SPI1.setRX(GPIO_SPI_MISO);
   SPI1.setTX(GPIO_SPI_MOSI);

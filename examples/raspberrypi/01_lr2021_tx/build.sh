@@ -6,4 +6,4 @@ cd build
 cmake -G "CodeBlocks - Unix Makefiles" ..
 make -j$(nproc)
 cd ..
-size build/03_lr2021_pingpong
+size build/02_lr2021_tx

@@ -69,7 +69,6 @@ void printAscii(const uint8_t* data, size_t len) {
 // ===================== Setup =====================
 void setup() {
   Serial.begin(115200);
-  delay(5000);
 
   Serial.println(F("\n[Setup] Starting Arduino UNO R4 LoRaWAN"));
 

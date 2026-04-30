@@ -31,7 +31,6 @@ LR2021 radio = new Module(NSS_PIN, IRQ_PIN, NRST_PIN, BUSY_PIN);
 
 void setup() {
   Serial.begin(115200);
-  delay(3000);
 
   // enable external crystal
   radio.XTAL = true;

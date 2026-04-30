@@ -51,7 +51,6 @@ void setFlag(void) {
 
 void setup() {
   Serial.begin(115200);
-  delay(3000);
 
   SPI.begin(GPIO_SPI_CLK, GPIO_SPI_MISO, GPIO_SPI_MOSI, -1);
 

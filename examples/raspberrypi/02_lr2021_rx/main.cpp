@@ -87,6 +87,15 @@ int main(int argc, char** argv) {
   }
   printf("[LR2021] Listening for packets...\r\n");
 
+  // if needed, 'listen' mode can be disabled by calling
+  // any of the following methods:
+  //
+  // radio.standby()
+  // radio.sleep()
+  // radio.transmit();
+  // radio.receive();
+  // radio.scanChannel();
+
   // Main loop
   uint8_t rxBuf[256];
   size_t len;

@@ -96,7 +96,6 @@ void printAscii(const uint8_t* data, size_t len) {
 // =======================================================
 void setup() {
   Serial.begin(115200);
-  delay(3000);
 
   Serial.println(F("\n[Setup] Starting..."));
 

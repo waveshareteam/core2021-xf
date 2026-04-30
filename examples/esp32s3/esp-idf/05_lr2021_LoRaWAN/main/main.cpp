@@ -77,7 +77,7 @@ void restoreLoRaWANState() {
  * @param  len   Length of the array
  */
 void printHex(const uint8_t* data, size_t len) {
-    ESP_LOGI(TAG, "[HEX] ");
+    printf("[HEX]: ");
     for (size_t i = 0; i < len; i++) {
         printf("%02X ", data[i]);
     }
@@ -90,11 +90,11 @@ void printHex(const uint8_t* data, size_t len) {
  * @param  len   Length of the array
  */
 void printAscii(const uint8_t* data, size_t len) {
-    ESP_LOGI(TAG, "[ASCII] ");
+    printf("[ASCII]: ");
     for (size_t i = 0; i < len; i++) {
         putchar((data[i] >= 32 && data[i] <= 126) ? data[i] : '.');
     }
-    putchar('\n');
+    printf("\n");
 }
 
 // ===================== config.h helper functions =====================
@@ -217,9 +217,7 @@ extern "C" void app_main(void) {
             ESP_LOGI(TAG, "[LoRaWAN] Downlink received");
             ESP_LOGI(TAG, "RX Window: %d", state);
             ESP_LOGI(TAG, "Length: %d", downlinkLen);
-            ESP_LOGI(TAG, "HEX: ");
             printHex(downlink, downlinkLen);
-            ESP_LOGI(TAG, "ASCII: ");
             printAscii(downlink, downlinkLen);
         } else {
             ESP_LOGI(TAG, "[LoRaWAN] No downlink received");

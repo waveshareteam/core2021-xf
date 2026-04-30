@@ -108,7 +108,7 @@ void restoreLoRaWANState() {
  * @param  len   Length of the array
  */
 void printHex(const uint8_t* data, size_t len) {
-    printf("[HEX] ");
+    printf("[HEX]: ");
     for (size_t i = 0; i < len; i++) {
         printf("%02X ", data[i]);
     }
@@ -121,7 +121,7 @@ void printHex(const uint8_t* data, size_t len) {
  * @param  len   Length of the array
  */
 void printAscii(const uint8_t* data, size_t len) {
-    printf("[ASCII] ");
+    printf("[ASCII]: ");
     for (size_t i = 0; i < len; i++) {
         printf("%c", (data[i] >= 32 && data[i] <= 126) ? data[i] : '.');
     }
@@ -244,9 +244,7 @@ int main(int argc, char** argv) {
             printf("[LoRaWAN] Downlink received\n");
             printf("RX Window: %d\n", state);
             printf("Length: %d\n", downlinkLen);
-            printf("HEX: ");
             printHex(downlink, downlinkLen);
-            printf("ASCII: ");
             printAscii(downlink, downlinkLen);
         } else {
             printf("[LoRaWAN] No downlink received\n");

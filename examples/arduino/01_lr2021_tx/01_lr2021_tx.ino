@@ -58,7 +58,7 @@ void setFlag(void) {
 
 void setup() {
   Serial.begin(115200);
-  delay(3000);
+
   // LR2021 allows to use any DIO pin as the interrupt
   // as an example, we set DIO10 to be the IRQ
   // this has to be done prior to calling begin()!

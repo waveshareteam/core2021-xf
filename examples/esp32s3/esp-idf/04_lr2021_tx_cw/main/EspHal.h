@@ -2,14 +2,19 @@
 #define ESP_HAL_H
 
 #include <stdio.h>
+#include <string.h>
 
 #include <RadioLib.h>
+#include "config.h"
+
 #include "driver/spi_master.h"
 #include "driver/gpio.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "esp_timer.h"
 #include "esp_log.h"
+#include "nvs_flash.h"
+#include "nvs.h"
 
 // define Arduino-style macros
 #define LOW                         (0x0)
@@ -19,15 +24,6 @@
 #define RISING                      (0x01)
 #define FALLING                     (0x02)
 #define NOP()                       asm volatile ("nop")
-
-#define SPI_FREQ_HZ    8 * 1000 * 1000
-#define GPIO_SPI_MISO  46
-#define GPIO_SPI_MOSI  45
-#define GPIO_SPI_CLK   40
-#define NSS_PIN   42
-#define IRQ_PIN   38
-#define NRST_PIN  39
-#define BUSY_PIN  41
 
 class EspHal : public RadioLibHal {
 public:
@@ -83,7 +79,11 @@ public:
 
         gpio_set_intr_type((gpio_num_t)pin, (gpio_int_type_t)mode);
 
-        gpio_install_isr_service(0);
+        if(!isr_service_installed)
+        {
+            gpio_install_isr_service(0);
+            isr_service_installed = true;
+        }
 
         gpio_isr_handler_add((gpio_num_t)pin, (gpio_isr_t)cb, NULL);
     }
@@ -126,7 +126,7 @@ public:
 
         uint32_t start = micros();
 
-        
+        // 等待状态变化
         while(digitalRead(pin) == state) {
             if((micros() - start) > timeout) {
                 return 0;
@@ -159,7 +159,7 @@ public:
         spi_host_device_t host = SPI2_HOST;
 
         spi_device_interface_config_t devcfg = {};
-        devcfg.clock_speed_hz = SPI_FREQ_HZ;
+        devcfg.clock_speed_hz = SPI_Hz;
         devcfg.mode = 0;
         devcfg.spics_io_num = -1;
         devcfg.queue_size = 1;
@@ -210,7 +210,9 @@ private:
     int8_t spiSCK;
     int8_t spiMISO;
     int8_t spiMOSI;
-
+    
     spi_device_handle_t spi;
+    
+    bool isr_service_installed = false;
 };
 #endif
