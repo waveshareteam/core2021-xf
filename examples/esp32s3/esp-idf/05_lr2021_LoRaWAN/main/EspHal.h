@@ -126,7 +126,7 @@ public:
 
         uint32_t start = micros();
 
-        // 等待状态变化
+        // Wait for state change
         while(digitalRead(pin) == state) {
             if((micros() - start) > timeout) {
                 return 0;

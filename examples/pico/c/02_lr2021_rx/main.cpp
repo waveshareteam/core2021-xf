@@ -1,44 +1,61 @@
 /*
-   RadioLib Non-Arduino Raspberry Pi Example
+  RadioLib Non-Arduino Raspberry Pi Pico library example
 
-   This example shows how to use RadioLib without Arduino.
-   In this case, a Raspberry Pi with WaveShare SX1302 LoRaWAN Hat
-   using the lgpio library
-   https://abyz.me.uk/lg/lgpio.html
+  Licensed under the MIT License
 
-   Can be used as a starting point to port RadioLib to any platform!
-   See this API reference page for details on the RadioLib hardware abstraction
-   https://jgromes.github.io/RadioLib/class_hal.html
+  Copyright (c) 2024 Cameron Goddard
 
-   For full API reference, see the GitHub Pages
-   https://jgromes.github.io/RadioLib/
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
 */
+
+// define pins to be used
+#define SPI_PORT spi1
+#define SPI_MISO 12
+#define SPI_MOSI 11
+#define SPI_SCK 10
+
+#define RFM_NSS 13
+#define RFM_RST 5
+#define RFM_IRQ 15
+#define RFM_BUSY 14
+
+#include <pico/stdlib.h>
 
 // include the library
 #include <RadioLib.h>
 
 // include the hardware abstraction layer
-#include "hal/RPi/PiHal.h"
+#include "hal/RPiPico/PicoHal.h"
 
-#define SPI_FREQ_HZ    8 * 1000 * 1000
-#define NSS_PIN   25
-#define IRQ_PIN   17
-#define NRST_PIN  22
-#define BUSY_PIN  24
+// uncomment the following only on one
+// of the nodes to initiate the pings
+#define INITIATING_NODE
 
 // create a new instance of the HAL class
-// use SPI channel 0
-// The CS of LR2021 cannot use CE0; 
-// it needs to be replaced with another option; 
-// otherwise, communication will not be possible.
-PiHal* hal = new PiHal(0, SPI_FREQ_HZ);
+PicoHal* hal = new PicoHal(SPI_PORT, SPI_MISO, SPI_MOSI, SPI_SCK);
 
 // now we can create the radio module
-// NSS pin:   25
-// DIO1 pin:  17
-// NRST pin:  22
-// BUSY pin:  24
-LR2021 radio = new Module(hal, NSS_PIN, IRQ_PIN, NRST_PIN, BUSY_PIN);
+// NSS pin:  13
+// DIO0 pin:  15
+// RESET pin:  5
+// DIO1 pin:  14
+LR2021 radio = new Module(hal, RFM_NSS, RFM_IRQ, RFM_RST, RFM_BUSY);
 
 // save transmission state between loops
 int transmissionState = RADIOLIB_ERR_NONE;
@@ -49,13 +66,14 @@ void setFlag(void) {
   receivedFlag = true;
 }
 
-// the entry point for the program
-int main(int argc, char** argv) {
+
+int main() {
+  // initialize just like with Arduino
+  printf("[LR2021] Initializing ... ");
+
   radio.irqDioNum = 11;
   radio.XTAL = true;
 
-  // initialize just like with Arduino
-  printf("[LR2021] Initializing ... \r\n");
   int state = radio.begin();
   if (state != RADIOLIB_ERR_NONE) {
     printf("failed, code %d\n", state);
@@ -64,8 +82,8 @@ int main(int argc, char** argv) {
   printf("success!\n");
 
   // set the function that will be called
-  // when packet transmission is finished
-  radio.setPacketSentAction(setFlag);
+  // when packet reception is finished
+  radio.setPacketReceivedAction(setFlag);
 
   radio.setFrequency(868.0);
   radio.setOutputPower(22);
@@ -99,10 +117,12 @@ int main(int argc, char** argv) {
   // Main loop
   uint8_t rxBuf[256];
   size_t len;
-  
+
+  // loop forever
   for(;;) {
     if (receivedFlag) {
       receivedFlag = false;
+      memset(rxBuf, 0, sizeof(rxBuf));
       len = radio.getPacketLength();
       int state = radio.readData(rxBuf, len);
 
@@ -125,7 +145,7 @@ int main(int argc, char** argv) {
         strBuf[len] = 0;
         printf("[LR2021] Data STR: %s\n\n", strBuf);
 
-        } else if (state == RADIOLIB_ERR_CRC_MISMATCH) {
+      } else if (state == RADIOLIB_ERR_CRC_MISMATCH) {
         printf("[LR2021] CRC error!\r\n");
 
       } else {
@@ -138,6 +158,5 @@ int main(int argc, char** argv) {
 
     hal->delay(10);
   }
-
   return(0);
 }

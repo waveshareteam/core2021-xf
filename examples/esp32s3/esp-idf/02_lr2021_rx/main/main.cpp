@@ -96,7 +96,7 @@ extern "C" void app_main(void) {
   while (1) {
     if (receivedFlag) {
       receivedFlag = false;
-      len = sizeof(rxBuf);
+      len = radio.getPacketLength();
       int state = radio.readData(rxBuf, len);
 
       if (state == RADIOLIB_ERR_NONE) {
