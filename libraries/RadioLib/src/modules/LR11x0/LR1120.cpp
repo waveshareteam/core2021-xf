@@ -77,7 +77,7 @@ int16_t LR1120::setFrequency(float freq, bool skipCalibration, float band) {
 }
 
 int16_t LR1120::setOutputPower(int8_t power) {
-  return(this->setOutputPower(power, false));
+  return(this->setOutputPower(power, true));
 }
 
 int16_t LR1120::setOutputPower(int8_t power, bool forceHighPower, uint32_t rampTimeUs) {
